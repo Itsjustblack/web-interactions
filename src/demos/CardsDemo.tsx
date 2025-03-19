@@ -22,13 +22,12 @@ function CardsDemo() {
 		tl.fromTo(
 			".stage",
 			{ opacity: 0 },
-			{ opacity: 1, duration: 1, ease: "power1.in" }
+			{ opacity: 1, duration: 1, ease: "expo.in", delay: 1 }
 		)
 			.fromTo(
 				".card-1",
 				{ scale: 1.7 },
-				{ duration: 0.6, scale: 1, ease: "expo.out" },
-				"+=1"
+				{ duration: 0.6, scale: 1, ease: "expo.out", delay: 1 }
 			)
 			.add(() => {
 				gsap.to(cards, {
