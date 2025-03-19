@@ -20,15 +20,10 @@ function CardsDemo() {
 		const yPositions = [60, 30, -5, -30];
 
 		tl.fromTo(
-			".stage",
-			{ opacity: 0 },
-			{ opacity: 1, duration: 1, ease: "expo.in", delay: 1 }
+			".card-1",
+			{ scale: 1.7 },
+			{ duration: 0.6, scale: 1, ease: "expo.out", delay: 1 }
 		)
-			.fromTo(
-				".card-1",
-				{ scale: 1.7 },
-				{ duration: 0.6, scale: 1, ease: "expo.out", delay: 1 }
-			)
 			.add(() => {
 				gsap.to(cards, {
 					x: (i) => [-70, -35, 5, 35][i],
@@ -44,12 +39,12 @@ function CardsDemo() {
 					keyframes: [
 						{
 							y: (i) => yPositions[i] - 130,
-							duration: 0.5,
-							ease: "expo.in",
+							duration: 0.3,
+							ease: "power3.inOut",
 						},
-						{ y: (i) => yPositions[i], duration: 0.8, ease: "expo.out" },
+						{ y: (i) => yPositions[i], duration: 0.4, ease: "power3.out" },
 					],
-					stagger: 0.125,
+					stagger: 0.3,
 				},
 				"+=0.3"
 			)
