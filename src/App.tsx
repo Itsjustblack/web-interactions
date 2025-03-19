@@ -1,10 +1,11 @@
 import ViewOnlyOnDesktop from "./components/ViewOnlyOnDesktop";
-import CardsDemo from "./demos/CardsDemo";
+import FormIntro from "./demos/FormIntro";
 
 function App() {
 	return (
 		<ViewOnlyOnDesktop>
-			<CardsDemo />
+			{/* <CardsDemo /> */}
+			<FormIntro />
 		</ViewOnlyOnDesktop>
 	);
 }
