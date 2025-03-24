@@ -9,6 +9,8 @@
 	--font-lora: "Lora", serif;
 }
 
-button {
-	cursor: pointer;
+img {
+	-webkit-user-drag: none;
+	overflow-clip-margin: content-box;
+	overflow: clip;
 }

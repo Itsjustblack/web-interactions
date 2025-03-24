@@ -1,11 +1,12 @@
 import ViewOnlyOnDesktop from "./components/ViewOnlyOnDesktop";
-import FormIntro from "./demos/FormIntro";
+import FluidAlbumViewer from "./demos/FluidAlbumViewer";
 
 function App() {
 	return (
 		<ViewOnlyOnDesktop>
 			{/* <CardsDemo /> */}
-			<FormIntro />
+			{/* <FormIntro /> */}
+			<FluidAlbumViewer />
 		</ViewOnlyOnDesktop>
 	);
 }
