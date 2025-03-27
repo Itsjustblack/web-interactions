@@ -3,10 +3,26 @@ import { useState } from "react";
 import { cn } from "../lib/utils";
 
 const panels = [
-	{ id: 1, image: "/assets/gallery/pic-1.jpeg" },
-	{ id: 2, image: "/assets/gallery/pic-2.webp" },
-	{ id: 3, image: "/assets/gallery/pic-3.webp" },
-	{ id: 4, image: "/assets/gallery/pic-4.webp" },
+	{
+		id: 1,
+		image:
+			"https://framerusercontent.com/images/LoV9BSvvjJosyi5ofeYweCCDrw.jpeg?scale-down-to=1024",
+	},
+	{
+		id: 2,
+		image:
+			"https://framerusercontent.com/images/GmqgOktAqpyfE7FLhX77YciUAM.png",
+	},
+	{
+		id: 3,
+		image:
+			"https://framerusercontent.com/images/EsvSKWhD5qDRVtGpypT0NzwVjs.png",
+	},
+	{
+		id: 4,
+		image:
+			"https://framerusercontent.com/images/ihN46Zr147HztFQAw31QGKZLns.png",
+	},
 ];
 
 const FluidAlbumViewer = () => {
@@ -40,33 +56,32 @@ const FluidAlbumViewer = () => {
 						onClick={() => handleSwap(panel)}
 						style={{ zIndex: index + 1 }}
 						className={cn(
-							"rounded-lg overflow-hidden cursor-pointer relative will-change-",
+							"cursor-pointer relative origin-top rounded-lg overflow-hidden",
 							{
 								"col-span-2": index === 0 || index === 3,
 							},
 							{
 								"size-[100px]": currentView === "flex",
 							},
-							// {
-							// 	"scale-x-60 scale-y-60": currentView === "grid",
-							// },
 							{
 								"absolute inset-0 left-1/2 -translate-1/2 top-1/2 w-[700px] h-[500px]":
 									currentView === "flex" && mainImage.id === panel.id,
 							}
 						)}
-						transition={{ duration: 0.6, type: "spring" }}
+						transition={{
+							duration: 0.2,
+							properties: ["width", "height", "left", "top"],
+						}}
 					>
-						<motion.div
-							// layoutId={`image-${panel.id}`}
-							className="absolute top-0 left-0 right-0 bottom-0 border-inherit"
-						>
+						<div className="absolute top-0 left-0 right-0 bottom-0">
 							<img
 								className="object-cover object-center w-full h-full border-inherit block"
+								draggable="false"
+								sizes="630.5px"
 								src={panel.image}
 								alt="Thumbnail"
 							/>
-						</motion.div>
+						</div>
 					</motion.div>
 				))}
 			</motion.div>
