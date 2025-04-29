@@ -15,7 +15,9 @@ function CardsDemo() {
 	useGSAP(() => {
 		const cards = gsap.utils.toArray<HTMLDivElement>(".card");
 
-		const tl = gsap.timeline();
+		const tl = gsap.timeline({
+			delay: 1,
+		});
 
 		const yPositions = [60, 30, -5, -30];
 

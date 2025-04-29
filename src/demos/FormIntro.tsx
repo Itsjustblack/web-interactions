@@ -6,7 +6,7 @@ import { ChevronsRight } from "lucide-react";
 const FormIntro = () => {
 	useGSAP(() => {
 		const tl = gsap.timeline({
-			delay: 1,
+			delay: 1.5,
 		});
 
 		const cards = gsap.utils.toArray(".form-card");
