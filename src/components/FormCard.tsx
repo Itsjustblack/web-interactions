@@ -8,7 +8,7 @@ const FormCard = ({ id }: FormCardProps) => {
 			id={id}
 			className="form-card relative w-[187px] h-[227px] rounded-lg shadow-md overflow-hidden flex-1 origin-[bottom_center]"
 		>
-			<div className="card-bg bg-white pt-7">
+			<div className="card-bg pt-7">
 				<svg
 					width="109"
 					height="127"

@@ -12,3 +12,15 @@
 button {
 	cursor: pointer;
 }
+
+.card-bg {
+	--color1: #ffffff;
+	--color2: #ffffff;
+	--color3: #ffffff;
+	background: linear-gradient(
+		to bottom left,
+		var(--color1),
+		var(--color2),
+		var(--color3)
+	);
+}
