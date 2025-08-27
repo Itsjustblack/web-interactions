@@ -19,7 +19,7 @@ const ShufflingCard = ({
 	return (
 		<div
 			className={cn(
-				"font-helvetica bg-white p-6 rounded-xl flex justify-between w-[460px] h-[270px] gap-x-16 absolute border will-change-transform",
+				"bg-white p-6 rounded-xl flex justify-between w-[460px] h-[270px] gap-x-16 absolute border will-change-transform",
 				className
 			)}
 			style={{ zIndex }}

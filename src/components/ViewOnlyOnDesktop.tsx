@@ -9,18 +9,14 @@ const ViewOnlyOnDesktop = ({ children }: Props) => {
 	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
-		// Check if screen is mobile sized
 		const checkScreenSize = () => {
 			setIsMobile(window.innerWidth < 1024);
 		};
 
-		// Initial check
 		checkScreenSize();
 
-		// Add event listener for window resize
 		window.addEventListener("resize", checkScreenSize);
 
-		// Cleanup
 		return () => window.removeEventListener("resize", checkScreenSize);
 	}, []);
 
