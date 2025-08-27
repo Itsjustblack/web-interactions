@@ -1,5 +1,7 @@
+@import url("https://fonts.cdnfonts.com/css/helvetica-neue-55");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @import "tailwindcss";
 
@@ -8,9 +10,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-	--font-helvetica: "Helvetica-Neue", sans-serif;
+	--font-helvetica: "Helvetica Neue", sans-serif;
 	--font-playfair: "Playfair Display", serif;
 	--font-lora: "Lora", serif;
+	--font-inter: "Inter", sans-serif;
 }
 
 button {
@@ -137,10 +140,10 @@ button {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+	* {
+		@apply border-border outline-ring/50;
 	}
-  body {
-    @apply bg-background text-foreground;
+	body {
+		@apply bg-background text-foreground;
 	}
 }

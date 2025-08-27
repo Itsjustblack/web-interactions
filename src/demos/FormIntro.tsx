@@ -6,7 +6,7 @@ import { ChevronsRight } from "lucide-react";
 const FormIntro = () => {
 	useGSAP(() => {
 		const tl = gsap.timeline({
-			delay: 1.5,
+			delay: 0.8,
 		});
 
 		const cards = gsap.utils.toArray(".form-card");
@@ -139,39 +139,41 @@ const FormIntro = () => {
 	});
 
 	return (
-		<div className="relative bg-[#ECECEC] overflow-hidden h-screen w-full flex flex-col items-center justify-center">
-			<div className="flex gap-x-10 items-end">
-				{[1, 2, 3, 4, 5].map((num) => (
-					<FormCard
-						key={num}
-						id={`form-card-${num}`}
-					/>
-				))}
-			</div>
-			<div className="relative z-5 mt-12 text-center flex items-center flex-col font-lora">
-				<h1 className="text-[32px] font-semibold text-[#2D2D2D] form-title">
-					Choose your persona
-				</h1>
-				<p className="mt-2 text-[#2D2D2D] form-subtitle text-base">
-					Select a persona that best represents you. Customize your experience
-					<br />
-					to match your style and preferences
-				</p>
-				<button className="bg-linear-to-b from-[#2D2B2F] to-[#2D2B2F] flex items-center justify-center gap-x-3 rounded-xl px-5 h-[45px] my-3 form-button">
-					<span className="text-white text-bold text-base font-lora">
-						Let's Go
+		<section className="bg-[#ECECEC] overflow-hidden h-screen">
+			<div className="relative h-full w-full flex flex-col items-center justify-center">
+				<div className="flex gap-x-10 items-end pt-20">
+					{[1, 2, 3, 4, 5].map((num) => (
+						<FormCard
+							key={num}
+							id={`form-card-${num}`}
+						/>
+					))}
+				</div>
+				<div className="relative z-5 mt-12 text-center flex items-center flex-col font-lora">
+					<h1 className="text-[32px] font-semibold text-[#2D2D2D] form-title">
+						Choose your persona
+					</h1>
+					<p className="mt-2 text-[#2D2D2D] form-subtitle text-base">
+						Select a persona that best represents you. Customize your experience
+						<br />
+						to match your style and preferences
+					</p>
+					<button className="bg-linear-to-b from-[#2D2B2F] to-[#2D2B2F] flex items-center justify-center gap-x-3 rounded-xl px-5 h-[45px] my-3 form-button">
+						<span className="text-white text-bold text-base font-lora">
+							Let's Go
+						</span>
+						<ChevronsRight
+							stroke="#B7B7B7"
+							className="size-5"
+						/>
+					</button>
+					<span className="text-xs text-[#2D2D2D] form-disclaimer">
+						takes ∼4 minutes
 					</span>
-					<ChevronsRight
-						stroke="#B7B7B7"
-						className="size-5"
-					/>
-				</button>
-				<span className="text-xs text-[#2D2D2D] form-disclaimer">
-					takes ∼4 minutes
-				</span>
+				</div>
+				<div className="absolute w-full h-[40vh] shrink-0 inset-x-0 -bottom-[20%] xl:-bottom-[25%] rounded-t-full z-0 bg-[radial-gradient(circle_at_center_bottom,#b277e5_15%,#c18ae9_30%,#dbc5ed_50%,#eadff5_80%,transparent_100%)] blur-3xl glow-bg"></div>
 			</div>
-			<div className="absolute w-[90vw] h-[40vw] shrink-0 -bottom-[60%] rounded-t-full z-0  bg-[radial-gradient(circle_at_center_bottom,#b277e5_15%,#c18ae9_30%,#dbc5ed_50%,#eadff5_80%,transparent_100%)] blur-3xl glow-bg"></div>
-		</div>
+		</section>
 	);
 };
 

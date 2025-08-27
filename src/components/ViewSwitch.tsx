@@ -1,4 +1,4 @@
-import { AnimationType } from "@/App";
+import { useLocation, useNavigate } from "react-router";
 import {
 	Select,
 	SelectContent,
@@ -7,20 +7,39 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-interface Props {
-	currentComponent: AnimationType;
-	setCurrentComponent: React.Dispatch<React.SetStateAction<AnimationType>>;
+export enum AnimationType {
+	FormIntro = "Form Intro",
+	ShufflingCards = "Shuffling Cards",
 }
 
-const ViewSwitch = ({ currentComponent, setCurrentComponent }: Props) => {
+const pathToAnimation: Record<string, AnimationType> = {
+	"/form-intro": AnimationType.FormIntro,
+	"/shuffling-cards": AnimationType.ShufflingCards,
+};
+
+const animationToPath: Record<AnimationType, string> = {
+	[AnimationType.FormIntro]: "/form-intro",
+	[AnimationType.ShufflingCards]: "/shuffling-cards",
+};
+
+const ViewSwitch = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const currentPath = location.pathname;
+	const currentAnimation =
+		pathToAnimation[currentPath] ?? AnimationType.ShufflingCards;
+
 	return (
 		<div className="fixed bottom-0 right-0 p-5 z-50">
 			<Select
-				value={currentComponent}
-				onValueChange={(value: AnimationType) => setCurrentComponent(value)}
+				value={currentAnimation}
+				onValueChange={(value: AnimationType) => {
+					navigate(animationToPath[value]);
+				}}
 			>
 				<SelectTrigger className="w-[180px] bg-white focus:!ring-0 font-semibold">
-					<SelectValue placeholder="Theme" />
+					<SelectValue placeholder="Animation" />
 				</SelectTrigger>
 				<SelectContent>
 					{Object.values(AnimationType).map((type) => (

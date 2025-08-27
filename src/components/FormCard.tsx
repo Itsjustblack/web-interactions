@@ -6,7 +6,7 @@ const FormCard = ({ id }: FormCardProps) => {
 	return (
 		<div
 			id={id}
-			className="form-card relative w-[187px] h-[227px] rounded-lg shadow-md overflow-hidden flex-1 origin-[bottom_center]"
+			className="form-card relative w-[160px] xl:w-[200px] aspect-[0.824] rounded-lg shadow-md overflow-hidden origin-[bottom_center] flex flex-1 flex-col"
 		>
 			<div className="card-bg pt-7">
 				<svg
@@ -23,9 +23,9 @@ const FormCard = ({ id }: FormCardProps) => {
 					</g>
 				</svg>
 			</div>
-			<div className="p-3 border-t bg-white border-[#F4F4F4] space-y-2">
-				<div className="w-full bg-[#E4E6E7] h-5 rounded-lg"></div>
-				<div className="w-1/2 bg-[#EFF1F3] h-5 rounded-lg"></div>
+			<div className="p-2 xl:p-3 border-t bg-white border-[#F4F4F4] flex flex-col gap-y-2 h-full">
+				<div className="w-full bg-[#E4E6E7] max-h-5 flex-1 rounded-lg"></div>
+				<div className="w-1/2 bg-[#EFF1F3] max-h-5 flex-1 rounded-lg"></div>
 			</div>
 		</div>
 	);
