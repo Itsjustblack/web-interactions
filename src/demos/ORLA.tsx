@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { SlowMo } from "gsap/EasePack";
 import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 gsap.registerPlugin(SlowMo);
 gsap.registerPlugin(useGSAP);
@@ -67,8 +67,23 @@ const OVERALL_DELAY = 1;
 const ORLALandingPage = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [progress, setProgress] = useState(0);
-
 	const [startSplit, setStartSplit] = useState(false);
+
+	const [imagesLoaded, setImagesLoaded] = useState(false);
+
+	useEffect(() => {
+		let loaded = 0;
+		images.forEach((img) => {
+			const preload = new Image();
+			preload.src = `/assets/${img.src}`;
+			preload.onload = () => {
+				loaded++;
+				if (loaded === images.length) {
+					setImagesLoaded(true);
+				}
+			};
+		});
+	}, []);
 
 	const ellipsePoints = useMemo(
 		() =>
@@ -84,87 +99,93 @@ const ORLALandingPage = () => {
 		[]
 	);
 
-	useGSAP(() => {
-		const selector = gsap.utils.selector(containerRef);
+	useGSAP(
+		() => {
+			if (!imagesLoaded) return;
 
-		const allCards = gsap.utils.toArray<HTMLDivElement>(".card");
-		const centerCard = allCards[allCards.length - 1];
-		const nonCenterCards = allCards.filter((_, i) => i !== allCards.length - 1);
+			const selector = gsap.utils.selector(containerRef);
 
-		// Start with all hidden
-		gsap.set(allCards, { opacity: 0 });
-		gsap.set(centerCard, { zIndex: 20 });
-		gsap.set(selector("#sub-title"), { opacity: 0 });
-		gsap.set(selector("#nav"), { y: -100 });
+			const allCards = gsap.utils.toArray<HTMLDivElement>(".card");
+			const centerCard = allCards[allCards.length - 1];
+			const nonCenterCards = allCards.filter(
+				(_, i) => i !== allCards.length - 1
+			);
 
-		// Create timeline
-		const tl = gsap.timeline();
+			// Start with all hidden
+			gsap.set(centerCard, { zIndex: 20 });
+			gsap.set(selector("#sub-title"), { opacity: 0 });
+			gsap.set(selector("#nav"), { y: -100 });
 
-		// Fade in all cards
-		tl.to(allCards, {
-			opacity: 1,
-			delay: 0.5 + OVERALL_DELAY,
-			duration: 0.25,
-			ease: "power2.out",
-			stagger: 0.2,
-		});
+			// Create timeline
+			const tl = gsap.timeline();
 
-		// Fade out non-center cards after 0.5s delay
-		tl.to(
-			nonCenterCards,
-			{
-				opacity: 0,
-				duration: 1,
-				ease: "power2.out",
-				stagger: {
-					each: 0.3,
-					from: "end",
+			// Fade in all cards
+			tl.to(allCards, {
+				opacity: 1,
+				delay: 0.5 + OVERALL_DELAY,
+				duration: 0.2,
+				ease: "linear",
+				stagger: 0.2,
+			});
+
+			// Fade out non-center cards after 0.5s delay
+			tl.to(
+				nonCenterCards,
+				{
+					opacity: 0,
+					duration: 0.9,
+					ease: "power2.out",
+					stagger: {
+						each: 0.3,
+						from: "end",
+					},
 				},
-			},
-			"+=0.6"
-		);
+				"+=0.6"
+			);
 
-		// Scale center card
-		tl.to(centerCard, {
-			width: "100%",
-			height: "100%",
-			duration: 1.2,
-			ease: "circ.out",
-			onComplete: () => {
-				setTimeout(() => {
-					setStartSplit(true);
-				}, 280);
-			},
-		});
+			// Scale center card
+			tl.to(centerCard, {
+				width: "100%",
+				height: "100%",
+				duration: 1.15,
+				ease: "circ.out",
+				onComplete: () => {
+					setTimeout(() => {
+						setStartSplit(true);
+					}, 280);
+				},
+			});
 
-		tl.fromTo(
-			"#sub-title",
-			{
-				opacity: 0,
-			},
-			{ opacity: 1, duration: 1.3, ease: "power1.out", delay: 1.35 }
-		);
+			tl.fromTo(
+				"#sub-title",
+				{
+					opacity: 0,
+				},
+				{ opacity: 1, duration: 1.3, ease: "power1.out", delay: 1.35 }
+			);
 
-		tl.fromTo(
-			"#nav",
-			{
-				y: -70,
-			},
-			{ y: 0, duration: 1, ease: "power1.out" },
-			"-=0.6"
-		);
+			tl.fromTo(
+				"#nav",
+				{
+					y: -70,
+				},
+				{ y: 0, duration: 0.9, ease: "power1.out" },
+				"-=0.8"
+			);
 
-		// Progress bar independent
-		gsap.to(selector("#loader"), {
-			width: "100%",
-			duration: 4.8,
-			ease: "power1.out",
-			delay: OVERALL_DELAY,
-			onUpdate() {
-				setProgress(this.progress());
-			},
-		});
-	});
+			// Progress bar independent
+			gsap.to(selector("#loader"), {
+				width: "100%",
+				duration: 4.8,
+				ease: "power1.out",
+				delay: OVERALL_DELAY,
+				onUpdate() {
+					setProgress(this.progress());
+				},
+			});
+		},
+		{ dependencies: [imagesLoaded] }
+	);
 
 	return (
 		<section
@@ -177,7 +198,7 @@ const ORLALandingPage = () => {
 					<div
 						key={i}
 						className={cn(
-							`w-[34%] h-auto aspect-[16_/_9.6] card text-xl font-bold absolute bg-cover bg-no-repeat`,
+							`w-[34%] h-auto aspect-[16_/_9.6] card text-xl font-bold absolute bg-cover bg-no-repeat opacity-0`,
 							currentImage.className
 						)}
 						style={{
