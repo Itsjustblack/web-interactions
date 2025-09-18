@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import CardsDemo from "./demos/CardsDemo";
 import Layout from "./components/Layout";
 import FormIntro from "./demos/FormIntro";
+import ORLALandingPage from "./demos/ORLA";
 
 function App() {
 	return (
@@ -29,6 +30,11 @@ function App() {
 					<Route
 						path="form-intro"
 						element={<FormIntro />}
+					/>
+
+					<Route
+						path="orla-landing-page"
+						element={<ORLALandingPage />}
 					/>
 
 					<Route
