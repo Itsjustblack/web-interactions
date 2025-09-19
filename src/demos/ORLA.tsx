@@ -167,7 +167,7 @@ const ORLALandingPage = () => {
 				delay: OVERALL_DELAY,
 				onUpdate() {
 					const p = Math.round(this.progress() * 100);
-					if (p % 5 === 0) setProgress(p);
+					setProgress(p);
 				},
 			});
 		},
