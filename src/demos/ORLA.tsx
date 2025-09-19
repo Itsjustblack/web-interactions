@@ -1,12 +1,10 @@
 import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { SlowMo } from "gsap/EasePack";
 import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-gsap.registerPlugin(SlowMo);
 gsap.registerPlugin(useGSAP);
 
 type Point = { x: number; y: number };
@@ -62,7 +60,7 @@ const images = [
 
 const TOTAL_CARDS = 7;
 
-const OVERALL_DELAY = 1;
+const OVERALL_DELAY = 1.5;
 
 const ORLALandingPage = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -72,16 +70,16 @@ const ORLALandingPage = () => {
 	const [imagesLoaded, setImagesLoaded] = useState(false);
 
 	useEffect(() => {
-		let loaded = 0;
-		images.forEach((img) => {
-			const preload = new Image();
-			preload.src = `/assets/${img.src}`;
-			preload.onload = () => {
-				loaded++;
-				if (loaded === images.length) {
-					setImagesLoaded(true);
-				}
-			};
+		const loadImage = (src: string) =>
+			new Promise<void>((resolve) => {
+				const img = new Image();
+				img.src = `/assets/${src}`;
+				img.onload = () => resolve();
+			});
+
+		Promise.all(images.map((img) => loadImage(img.src))).then(() => {
+			const timer = setTimeout(() => setImagesLoaded(true), 600);
+			return () => clearTimeout(timer);
 		});
 	}, []);
 
@@ -113,8 +111,6 @@ const ORLALandingPage = () => {
 
 			// Start with all hidden
 			gsap.set(centerCard, { zIndex: 20 });
-			gsap.set(selector("#sub-title"), { opacity: 0 });
-			gsap.set(selector("#nav"), { y: -100 });
 
 			// Create timeline
 			const tl = gsap.timeline();
@@ -150,28 +146,18 @@ const ORLALandingPage = () => {
 				duration: 1.15,
 				ease: "circ.out",
 				onComplete: () => {
-					setTimeout(() => {
-						setStartSplit(true);
-					}, 280);
+					gsap.delayedCall(0.28, () => setStartSplit(true));
 				},
 			});
 
-			tl.fromTo(
-				"#sub-title",
-				{
-					opacity: 0,
-				},
-				{ opacity: 1, duration: 1.3, ease: "power1.out", delay: 1.35 }
-			);
+			tl.to("#sub-title", {
+				opacity: 1,
+				duration: 1.3,
+				ease: "power1.out",
+				delay: 1.35,
+			});
 
-			tl.fromTo(
-				"#nav",
-				{
-					y: -70,
-				},
-				{ y: 0, duration: 0.9, ease: "power1.out" },
-				"-=0.8"
-			);
+			tl.to("#nav", { y: 0, duration: 0.8, ease: "power1.out" }, "-=0.8");
 
 			// Progress bar independent
 			gsap.to(selector("#loader"), {
@@ -180,7 +166,8 @@ const ORLALandingPage = () => {
 				ease: "power1.out",
 				delay: OVERALL_DELAY,
 				onUpdate() {
-					setProgress(this.progress());
+					const p = Math.round(this.progress() * 100);
+					if (p % 5 === 0) setProgress(p);
 				},
 			});
 		},
@@ -212,7 +199,7 @@ const ORLALandingPage = () => {
 
 			<nav
 				id="nav"
-				className="fixed top-3 left-1/2 -translate-x-1/2 z-30 px-6 py-2 bg-gray-800/10 backdrop-blur-xs rounded-md text-white text-nowrap"
+				className="fixed top-3 left-1/2 -translate-x-1/2 z-30 px-6 py-2 bg-gray-800/10 backdrop-blur-xs rounded-md text-white text-nowrap -translate-y-[70px]"
 			>
 				<div className="flex text-sm font-space-mono justify-center gap-x-7 items-center">
 					<span className="font-inter text-xl z-50">ORLA</span>
@@ -247,7 +234,7 @@ const ORLALandingPage = () => {
 
 				<div
 					id="sub-title"
-					className="grid grid-cols-[repeat(20,_minmax(0,_1fr))] w-full text-center text-white absolute top-1/2 left-0 items-center -translate-y-1/2 font-space-mono"
+					className="grid grid-cols-[repeat(20,_minmax(0,_1fr))] w-full text-center text-white absolute top-1/2 left-0 items-center -translate-y-1/2 font-space-mono opacity-0"
 				>
 					<div className="text-lg xl:text-xl tracking-tight col-start-5 text-nowrap">
 						OWN YOUR SPACE
@@ -266,7 +253,7 @@ const ORLALandingPage = () => {
 				className="border-b-6 border-black w-0 absolute left-0 bottom-0 flex z-[15]"
 			>
 				<p className="font-space-mono text-3xl pb-6 ml-auto text-nowrap">
-					{`${Math.round(progress * 100)}%`}
+					{`${progress}%`}
 				</p>
 			</div>
 		</section>
