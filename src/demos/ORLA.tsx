@@ -54,11 +54,11 @@ const images = [
 	{ src: "cabin-4.jpg", className: "bg-[center_55%]" },
 	{ src: "cabin-5.jpg", className: "bg-[center_18%]" },
 	{ src: "cabin-6.jpg", className: "bg-[center_27%]" },
-	{ src: "cabin-2.jpg", className: "bg-[center_50%]" },
+	// { src: "cabin-2.jpg", className: "bg-[center_50%]" },
 	{ src: "cabin-9.jpg", className: "bg-[center_40%] xl:bg-[center_58%]" },
 ];
 
-const TOTAL_CARDS = 7;
+const TOTAL_CARDS = 6;
 
 const OVERALL_DELAY = 1.5;
 
@@ -162,8 +162,8 @@ const ORLALandingPage = () => {
 			// Progress bar independent
 			gsap.to(selector("#loader"), {
 				width: "100%",
-				duration: 4.8,
-				ease: "power1.out",
+				duration: 4.45,
+				ease: "linear",
 				delay: OVERALL_DELAY,
 				onUpdate() {
 					const p = Math.round(this.progress() * 100);
